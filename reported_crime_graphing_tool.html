@@ -13140,13 +13140,17 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="n">reported_crime_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/reported_crime_data.csv&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">reported_crime_plot</span><span class="p">(</span><span class="n">violation_type</span><span class="p">,</span> <span class="n">metrics_list</span><span class="p">):</span>
-    <span class="n">reported_crime_data_filtered</span> <span class="o">=</span> <span class="n">reported_crime_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">reported_crime_data</span><span class="o">.</span><span class="n">Violations</span> <span class="o">==</span> <span class="n">violation_type</span><span class="p">]</span>
-    <span class="n">reported_crime_data_filtered</span> <span class="o">=</span> <span class="n">reported_crime_data_filtered</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">reported_crime_data_filtered</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">metrics_list</span><span class="p">)]</span>
+<span class="k">def</span> <span class="nf">reported_crime_plot</span><span class="p">(</span><span class="n">Violation</span><span class="p">,</span> <span class="n">Statistics</span><span class="p">):</span>
+    <span class="n">reported_crime_data_filtered</span> <span class="o">=</span> <span class="n">reported_crime_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">reported_crime_data</span><span class="o">.</span><span class="n">Violations</span> <span class="o">==</span> <span class="n">Violation</span><span class="p">]</span>
+    <span class="n">reported_crime_data_filtered</span> <span class="o">=</span> <span class="n">reported_crime_data_filtered</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">reported_crime_data_filtered</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">Statistics</span><span class="p">)]</span>
     <span class="n">reported_crime_data_wide</span> <span class="o">=</span> <span class="n">reported_crime_data_filtered</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s2">&quot;REF_DATE&quot;</span><span class="p">,</span> <span class="s2">&quot;Statistics&quot;</span><span class="p">,</span> <span class="s2">&quot;VALUE&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">reported_crime_data_wide</span><span class="p">)</span>
-<span class="n">interact</span><span class="p">(</span><span class="n">reported_crime_plot</span><span class="p">,</span> <span class="n">violation_type</span> <span class="o">=</span> <span class="n">reported_crime_data</span><span class="o">.</span><span class="n">Violations</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">metrics_list</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">SelectMultiple</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="n">reported_crime_data</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">layout</span><span class="o">=</span><span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;50%&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;80px&#39;</span><span class="p">)))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">bottom</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Year&quot;</span><span class="p">)</span>
+<span class="n">interact</span><span class="p">(</span><span class="n">reported_crime_plot</span><span class="p">,</span> 
+         <span class="n">Violation</span> <span class="o">=</span> <span class="n">reported_crime_data</span><span class="o">.</span><span class="n">Violations</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> 
+         <span class="n">Statistics</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">SelectMultiple</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="n">reported_crime_data</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">layout</span><span class="o">=</span><span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;50%&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;80px&#39;</span><span class="p">)));</span>
 </pre></div>
 
     </div>
@@ -13171,22 +13175,18 @@ div#notebook {
 
 </div>
 
-<div class="output_area">
-
-    
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;function __main__.reported_crime_plot(violation_type, metrics_list)&gt;</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
   </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Data in the above graph is provided by Statsics Canada. Table 35-10-0177-01  Incident-based crime statistics, by detailed violations, Canada, provinces, territories, Census Metropolitan Areas and Canadian Forces Military Police. <a href="https://doi.org/10.25318/3510017701-eng">https://doi.org/10.25318/3510017701-eng</a></p>
+<p>For more information about this data source see <a href="https://www23.statcan.gc.ca/imdb/p2SV.pl?Function=getSurvey&amp;SDDS=3302">https://www23.statcan.gc.ca/imdb/p2SV.pl?Function=getSurvey&amp;SDDS=3302</a></p>
+
+</div>
+</div>
+</div>
 
 
 
