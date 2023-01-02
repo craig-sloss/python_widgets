@@ -13140,17 +13140,7 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="n">budget_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/tabular_budget_data.csv&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">budget_plot</span><span class="p">(</span><span class="n">Departments</span><span class="p">,</span> <span class="n">Metric</span><span class="p">):</span>
-    <span class="n">budget_data_filtered</span> <span class="o">=</span> <span class="n">budget_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">budget_data</span><span class="o">.</span><span class="n">revised_name</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">Departments</span><span class="p">)]</span>
-    <span class="n">budget_data_wide</span> <span class="o">=</span> <span class="n">budget_data_filtered</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="s2">&quot;revised_name&quot;</span><span class="p">,</span> <span class="n">Metric</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">budget_data_wide</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">bottom</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Year&quot;</span><span class="p">)</span>
-<span class="n">all_departments</span> <span class="o">=</span> <span class="n">budget_data</span><span class="o">.</span><span class="n">revised_name</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-<span class="n">interact</span><span class="p">(</span><span class="n">budget_plot</span><span class="p">,</span> 
-         <span class="n">Departments</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">SelectMultiple</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="n">all_departments</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;50%&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;80px&#39;</span><span class="p">)),</span> 
-         <span class="n">Metric</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gross_expenditure&#39;</span><span class="p">,</span> <span class="s1">&#39;gross_expenditure_normalized&#39;</span><span class="p">,</span> <span class="s1">&#39;net_expenditure&#39;</span><span class="p">,</span> <span class="s1">&#39;property_tax_levy&#39;</span><span class="p">,</span> <span class="s1">&#39;property_tax_levy_normalized&#39;</span><span class="p">]);</span>
+<span class="n">budget_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13166,12 +13156,95 @@ div#notebook {
     
 
 
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-  <div class="output_subarea output_widget_view ">
-    <button class="js-nbinteract-widget">
-      Loading widgets...
-    </button>
-  </div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>subtotal_group</th>
+      <th>revised_name</th>
+      <th>gross_expenditure</th>
+      <th>net_expenditure</th>
+      <th>property_tax_levy</th>
+      <th>gross_expenditure_normalized</th>
+      <th>property_tax_levy_normalized</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2017</td>
+      <td>Total Associated Agencies</td>
+      <td>Assessment Delivery Services (MPAC)</td>
+      <td>NaN</td>
+      <td>6622</td>
+      <td>6622</td>
+      <td>NaN</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018</td>
+      <td>Total Associated Agencies</td>
+      <td>Assessment Delivery Services (MPAC)</td>
+      <td>NaN</td>
+      <td>6772</td>
+      <td>6772</td>
+      <td>NaN</td>
+      <td>1.022652</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019</td>
+      <td>Total Associated Agencies</td>
+      <td>Assessment Delivery Services (MPAC)</td>
+      <td>6884.0</td>
+      <td>6884</td>
+      <td>6884</td>
+      <td>1.000000</td>
+      <td>1.039565</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>Total Associated Agencies</td>
+      <td>Assessment Delivery Services (MPAC)</td>
+      <td>7005.0</td>
+      <td>7005</td>
+      <td>7005</td>
+      <td>1.017577</td>
+      <td>1.057838</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2021</td>
+      <td>Total Associated Agencies</td>
+      <td>Assessment Delivery Services (MPAC)</td>
+      <td>7021.0</td>
+      <td>7021</td>
+      <td>7021</td>
+      <td>1.019901</td>
+      <td>1.060254</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
 
 </div>
 
