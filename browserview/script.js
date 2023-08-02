@@ -9,11 +9,7 @@ const chart = bb.generate({
   bindto: ".chart"
 });
 
-// Parse CSV data 
-var response = Papa.parse(data_csv, {
-	header: true
-});
-
+// Download CSV data 
 var response = Papa.parse("https://storage.googleapis.com/waterloo-region-data-visualization-tools/reported_crime_data.csv", {
 	download: true,
 	header : true
