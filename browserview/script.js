@@ -9,10 +9,28 @@ const chart = bb.generate({
   bindto: ".chart"
 });
 
-var response = Papa.parse("https://storage.googleapis.com/waterloo-region-data-visualization-tools/reported_crime_data.csv", {
-	download: true,
-	header : true
-})
+// Function to download a CSV from a remote server into a string
+// Based on: https://stackoverflow.com/questions/30192153/getting-a-remote-csv-file-and-putting-it-into-a-variable
+function getCSV(file) {
+	var rawFile = new XMLHttpRequest();
+	var allText;
+
+	rawFile.open("GET", file, false);
+	rawFile.onreadystatechange = function () {
+		if(rawFile.readyState === 4)
+			if(rawFile.status === 200 || rawFile.status == 0)
+				allText = rawFile.responseText;
+	};
+
+	rawFile.send();
+	return allText;
+}
+
+data_csv = getCSV(file = "https://storage.googleapis.com/waterloo-region-data-visualization-tools/reported_crime_data.csv")
+
+var response = Papa.parse(data_csv, {
+	header: true
+});
 
 // Group data by violation type and statistic
 let data = {};
